@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "auto-proc",
+  "version": "0.1.0",
+  "description": "Поиск выгодных оптовых предложений по номенклатуре заказа, отправка запросов КП поставщикам и проверка почты на ответы (IMAP/SMTP через mail-mcp).",
+  "author": {
+    "name": "Auto Procurement"
+  },
+  "license": "MIT",
+  "keywords": ["procurement", "wholesale", "imap", "smtp", "email", "mcp"],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "Auto Procurement",
+        "shortDescription": "Поиск опта, запросы КП, проверка ответов в почте",
+        "longDescription": "Скиллы для закупок: поиск более выгодных оптовых/B2B предложений, письма поставщикам по шаблону и мониторинг INBOX на ответы. Локальный MCP mail-mcp (IMAP/SMTP) с подтверждением отправки.",
+        "developerName": "Auto Procurement",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "defaultPrompt": [
+          "Найди более выгодные оптовые предложения по позиции из заказа поставщику",
+          "Отправь поставщику запрос КП по шаблону",
+          "Проверь почту на ответы по запросам КП"
+        ],
+        "brandColor": "#1a1a2e",
+        "logo": "./assets/logo.svg"
+      }
+    }
+  }
+}

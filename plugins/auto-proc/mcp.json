@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "mail": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "--prefer-online",
+        "--package=@1amsheldon/mail-mcp@latest",
+        "mail-mcp",
+        "--confirm",
+        "--audit-log",
+        "--redact"
+      ],
+      "cwd": "${PLUGIN_ROOT}",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "none"
+          }
+        }
+      }
+    }
+  }
+}
