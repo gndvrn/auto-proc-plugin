@@ -1,0 +1,8 @@
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: mcp
+      value: mail
+      description: IMAP из mcp.json плагина

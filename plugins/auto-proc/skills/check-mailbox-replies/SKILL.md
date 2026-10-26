@@ -1,19 +1,27 @@
 ---
 name: check-mailbox-replies
 description: >-
-  IMAP: ответы на запросы КП. Вручную или по расписанию в отдельном чате.
+  IMAP: ответы поставщиков на запросы КП. Применяй автоматически, если пользователь спрашивает
+  про ответы/почту/КП; не блокируй основной цикл auto-proc-cycle.
 ---
-# Ответы на КП в почте
+# Проверка почты на ответы поставщиков
 
-**Настройки:** `INBOX` · тема **`[Запрос КП]`** · слова: *коммерческое предложение*, *КП*, *commercial offer* · без журнала — **7** дней.
+## Конфигурация
 
-**Журнал проверок:** `skills/check-mailbox-replies/checkpoint.json` (создай `{ "lastCheckedAt": null, "lastSeenMessageIds": [] }`, если нет).
+`config/procurement.yaml` → `mailbox_check`, checkpoint: `config/mailbox-checkpoint.json`.
 
 ## Алгоритм
 
-1. MCP mail: `list_accounts` → `mail_query` / `searchMessages` (`since` из checkpoint или −7 дней, пагинация `nextCursor`).
-2. Новые Message-ID → `readMessage`, кратко: от кого, суть, цены/вложения.
-3. Запиши checkpoint (`lastCheckedAt`, `lastSeenMessageIds` ≤500).
-4. Краткий отчёт.
+1. MCP **`mail`**: `list_accounts` → первый `accountId`.
+2. Окно: `lastCheckedAt` из checkpoint или последние `since_days_if_no_checkpoint` дней.
+3. `mail_query` / `searchMessages` (folder, subject/keywords из конфига, `since`, пагинация `nextCursor`).
+4. Новые Message-ID → `readMessage`, кратко: от кого, суть, цены/вложения.
+5. Обнови checkpoint (`lastCheckedAt`, `lastSeenMessageIds` ≤500).
+6. Краткий отчёт.
 
-**Регулярно:** запускай этот скилл вручную или настрой напоминание — выполни скилл, обнови checkpoint.
+Критерии поиска совпадают с `email.subject_prefix` и шаблоном КП.
+
+## Ограничения
+
+- Пустая выборка — расширь `keywordsAny` в конфиге.
+- Вложения — только по явному запросу.

@@ -1,0 +1,40 @@
+# Настройки скиллов закупок. Редактируйте под ваш процесс.
+
+search:
+  query_templates:
+    - "{nomenclature} опт цена купить"
+    - "{nomenclature} wholesale price B2B"
+    - "{nomenclature} прайс оптовая закупка"
+  max_queries: 5
+  min_savings_percent: 3
+  compare_by: unit_price
+  currency_default: RUB
+  preferred_domains: []
+
+offers_report:
+  fields:
+    - supplier_or_source
+    - title
+    - unit_price
+    - currency
+    - min_order_qty
+    - url
+    - savings_percent
+    - notes
+  as_markdown_table: true
+  max_offers_listed: 15
+
+email:
+  default_template_id: cp-request
+  subject_prefix: "[Запрос КП]"
+  template_file: cp-request.ru.md
+
+mailbox_check:
+  folder: INBOX
+  reply_subject_contains: "[Запрос КП]"
+  also_keywords_any:
+    - "коммерческое предложение"
+    - "КП"
+    - "commercial offer"
+  since_days_if_no_checkpoint: 7
+  checkpoint_file: config/mailbox-checkpoint.json

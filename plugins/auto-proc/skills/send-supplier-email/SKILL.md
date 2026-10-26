@@ -1,59 +1,42 @@
 ---
 name: send-supplier-email
 description: >-
-  Письмо поставщику (запрос КП) через MCP mail. После wholesale-offer-search или по просьбе пользователя.
+  Запрос КП поставщику через MCP mail. Автоматически после wholesale-offer-search в auto-proc-cycle;
+  также при номенклатуре в чате, если известен email. Не жди «отправь письмо» или «напиши поставщику».
 ---
-# Письмо поставщику
+# Отправка письма поставщику
 
-**Настройки:** префикс темы **`[Запрос КП]`** (тот же — в `check-mailbox-replies`).
+## Предварительные условия
 
-Почта: `npx -y @1amsheldon/mail-mcp@latest accounts add` — https://www.npmjs.com/package/@1amsheldon/mail-mcp
+MCP **`mail`** из `mcp.json` плагина. Если `list_accounts` пуст: `npx -y @1amsheldon/mail-mcp@latest accounts add`.
 
-## Профиль отправителя (правь здесь)
+Конфиг: `config/procurement.yaml` → `email`; шаблон `config/email-templates/<template_file>`.
 
-```yaml
-company_name: "ООО Пример"
-contact_person: "Иван Иванов"
-contact_phone: "+7 ..."
-contact_email: "procurement@example.com"
-delivery_terms: "склад покупателя, оплата по договору"
-```
+Профиль: **`config/sender-profile.yaml`**, иначе **`config/sender-profile.example.yaml`** — **не** спрашивай реквизиты в чате.
 
-## Шаблон письма (правь здесь)
+## Шаблон
 
-Подстановки `{{…}}`. Строка `Тема:` → subject MCP; ниже → body (plain text). `subject_prefix` = `[Запрос КП]`.
+Подстановки `{{variable}}`. Первая строка `Тема: ...` → subject; остальное → body, plain text.
 
-```
-Тема: {{subject_prefix}} {{nomenclature}}
+| Переменная | Откуда |
+| --- | --- |
+| `subject_prefix` | `email.subject_prefix` |
+| `supplier_name` | Заказ / лучший оффер / домен |
+| `nomenclature`, `quantity`, `unit` | Заказ; дефолты `1`, `шт` |
+| `reference_unit_price`, `currency` | Заказ; может быть «—» |
+| `delivery_terms`, контакты компании | Профиль отправителя |
 
-{{supplier_name}},
+Неизвестные ключи — пустая строка или дефолт профиля; **не** блокируй отправку вопросами.
 
-Добрый день.
+## MCP mail
 
-Просим подготовить коммерческое предложение на поставку:
+1. `list_accounts` → **первый** `accountId`.
+2. `mail_mutate` / `sendMessage`: `to`, `subject`, `body`, `isHtml: false`.
+3. `confirmationRequired` — черновик (to, subject, body) и **сразу** повтор с `confirmationId` **в том же ходе**.
+4. `smtp_outcome_unknown` — не повторять; проверка по документации mail MCP.
 
-Наименование: {{nomenclature}}
-Количество: {{quantity}} {{unit}}
-Ориентир по цене закупки (для сравнения): {{reference_unit_price}} {{currency}} за {{unit}}
+При необходимости прочитай ресурс `mail://agent-guide` у MCP mail.
 
-Условия поставки (желаемые): {{delivery_terms}}
+## После отправки
 
-Просим указать:
-- цену за {{unit}} при указанном объёме;
-- минимальную партию;
-- срок поставки;
-- условия оплаты и доставки;
-- срок действия предложения.
-
-С уважением,
-{{contact_person}}
-{{company_name}}
-{{contact_phone}}
-{{contact_email}}
-```
-
-## Алгоритм
-
-1. Возьми шаблон и профиль **из этого файла**; добавь данные заказа и `supplier_name` (спроси, если нет).
-2. MCP mail: `list_accounts` → `mail_mutate` / `sendMessage`. Подтверждение при `confirmationRequired`; при `smtp_outcome_unknown` — не слать повторно без проверки.
-3. Черновик пользователю до отправки. После — тема, получатель; предложи `check-mailbox-replies`.
+Факт, тема, получатель. Мониторинг почты — только по запросу пользователя (`check-mailbox-replies`).
