@@ -1,0 +1,16 @@
+interface:
+  display_name: "Проверка ответов поставщиков"
+  short_description: "Проверка почты на ответы и КП от поставщиков"
+  default_prompt: "Используй $check-mailbox-replies, чтобы проверить входящие ответы на запросы КП."
+
+policy:
+  allow_implicit_invocation: true
+  products:
+    - "CHAT"
+    - "CODEX"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "email-mcp"
+      description: "Почтовый MCP плагина (поиск входящих писем)"

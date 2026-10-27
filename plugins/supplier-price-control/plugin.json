@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "supplier-price-control",
+  "version": "0.1.0",
+  "description": "Полуавтоматический цикл контроля цен поставщиков для номенклатурных позиций и взаимодействие с контрагентами через электронную почту",
+  "author": {
+    "name": "Gennadiy Voronin"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "Контроль цен поставщиков",
+        "shortDescription": "Номенклатурная позиция → поиск оптовых предложений → запрос поставщику через электронную почту -> периодическая проверка почты",
+        "developerName": "Gennadiy Voronin",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ]
+      }
+    }
+  }
+}

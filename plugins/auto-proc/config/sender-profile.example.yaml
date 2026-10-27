@@ -1,6 +1,0 @@
-# Скопируйте в sender-profile.yaml и заполните (файл можно добавить в .gitignore)
-company_name: "ООО Пример"
-contact_person: "Иван Иванов"
-contact_phone: "+7 ..."
-contact_email: "procurement@example.com"
-delivery_terms: "склад покупателя, оплата по договору"

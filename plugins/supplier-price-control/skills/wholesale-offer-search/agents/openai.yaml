@@ -1,0 +1,10 @@
+interface:
+  display_name: "Поиск оптовых предложений"
+  short_description: "Оптовые B2B предложения по номенклатурной позиции"
+  default_prompt: "Используй $wholesale-offer-search для поиска оптовых предложений по позиции из чата."
+
+policy:
+  allow_implicit_invocation: true
+  products:
+    - "CHAT"
+    - "CODEX"

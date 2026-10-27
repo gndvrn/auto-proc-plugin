@@ -1,7 +1,7 @@
 {
   "name": "auto-proc",
   "interface": {
-    "displayName": "Auto Procurement"
+    "displayName": "Контроль цен поставщиков"
   },
   "plugins": [
     {

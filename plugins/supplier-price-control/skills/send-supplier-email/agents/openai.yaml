@@ -1,0 +1,16 @@
+interface:
+  display_name: "Запрос КП поставщику"
+  short_description: "Отправка запроса КП поставщику через почту"
+  default_prompt: "Используй $send-supplier-email, чтобы отправить поставщику запрос на коммерческое предложение."
+
+policy:
+  allow_implicit_invocation: true
+  products:
+    - "CHAT"
+    - "CODEX"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "email-mcp"
+      description: "Почтовый MCP плагина (отправка писем поставщикам)"
