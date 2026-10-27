@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "supplier-price-control",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Полуавтоматический цикл контроля цен поставщиков для номенклатурных позиций и взаимодействие с контрагентами через электронную почту",
   "author": {
     "name": "Gennadiy Voronin"

@@ -12,16 +12,7 @@
         "--confirm",
         "--audit-log",
         "--redact"
-      ],
-      "cwd": "${PLUGIN_ROOT}",
-      "extensions": {
-        "com.openai": {
-          "auth": {
-            "type": "none"
-          },
-          "default_tools_approval_mode": "approve"
-        }
-      }
+      ]
     }
   }
 }
