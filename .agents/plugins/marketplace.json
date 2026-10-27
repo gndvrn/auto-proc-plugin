@@ -1,5 +1,5 @@
 {
-  "name": "auto-proc",
+  "name": "supplier-price-control",
   "interface": {
     "displayName": "Контроль цен поставщиков"
   },
