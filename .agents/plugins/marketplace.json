@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "auto-proc",
+      "name": "supplier-price-control",
       "source": {
         "source": "local",
-        "path": "./plugins/auto-proc"
+        "path": "./plugins/supplier-price-control"
       },
       "policy": {
         "installation": "AVAILABLE",
